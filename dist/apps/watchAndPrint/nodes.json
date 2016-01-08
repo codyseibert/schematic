@@ -1,0 +1,31 @@
+{
+  "nodes": {
+    "watcher": {
+      "type": "watcher",
+      "start": true,
+      "constants": {
+        "file": "/Users/cseibert/workspace/design/dist/apps/watchAndPrint/testing.txt"
+      }
+    },
+    "timer": {
+      "type": "timer",
+      "start": true,
+      "constants": {
+        "interval": 5000
+      }
+    },
+    "generator": {
+      "type": "generator",
+      "on": "timer",
+      "constants": "wtf"
+    },
+    "logger": {
+      "type": "logger",
+      "on": "generator"
+    },
+    "printer": {
+      "type": "printer",
+      "on": "watcher"
+    }
+  }
+}

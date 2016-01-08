@@ -1,0 +1,10 @@
+{
+  "nodes": {
+    "watch": {
+      "inputs": {
+        "file": "testing.txt"
+      },
+      "outputs": null
+    }
+  }
+}
