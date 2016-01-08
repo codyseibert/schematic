@@ -1,7 +1,7 @@
 (function() {
   var app, emitter, filewalker, init, path, types;
 
-  app = require("./" + process.argv[2] + "/nodes.json");
+  app = require("./" + process.argv[2] + "/nodes");
 
   emitter = require('./emitter');
 

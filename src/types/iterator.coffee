@@ -2,4 +2,5 @@ emitter = require '../emitter'
 
 module.exports = (id, constants) ->
   run: (input) ->
-    console.log input
+    for obj in input
+      emitter.emit id, obj

@@ -17,20 +17,10 @@ module.exports = (grunt) ->
           cwd: "<%= config.apps %>"
           src: [
             '**/*'
-            '!**/*.cson'
+            '!**/*.coffee'
           ]
           dest: 'dist/apps'
         ]
-
-    cson:
-      dist:
-        expand: true
-        cwd: "<%= config.apps %>"
-        src: [
-          "**/*.cson"
-        ]
-        dest: 'dist/apps'
-        ext: '.json'
 
     coffee:
       dist:
@@ -40,6 +30,17 @@ module.exports = (grunt) ->
           '**/*.coffee'
         ]
         dest: "<%= config.dist %>"
+        ext: ".js"
+        options:
+          bare: false
+          sourceMap: false
+      apps:
+        expand: true
+        cwd: "<%= config.apps %>"
+        src : [
+          '**/*.coffee'
+        ]
+        dest: "<%= config.dist %>/apps"
         ext: ".js"
         options:
           bare: false
@@ -60,17 +61,17 @@ module.exports = (grunt) ->
         tasks: [
           'coffee:dist',
         ]
-      cson:
+      apps:
         files: [
-          "<%= config.apps %>/**/*.cson"
+          "<%= config.apps %>/**/*.coffee"
         ]
         tasks: [
-          'cson:dist',
+          'coffee:apps',
         ]
       files:
         files: [
           "<%= config.apps %>/**/*"
-          "!<%= config.apps %>/**/*.cson"
+          "!<%= config.apps %>/**/*.coffee"
         ]
         tasks: [
           'copy:dist',
@@ -83,8 +84,8 @@ module.exports = (grunt) ->
 
   grunt.registerTask 'build', [
     'clean'
-    'cson:dist'
     'copy:dist'
+    'coffee:apps'
     'coffee:dist'
   ]
 

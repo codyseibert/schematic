@@ -1,5 +1,5 @@
 {
-  "name": "design",
+  "name": "schematic",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -23,7 +23,11 @@
     "sinon-chai": "^2.8.0"
   },
   "dependencies": {
+    "cheerio": "^0.19.0",
     "filewalker": "^0.1.2",
-    "lodash": "^3.10.1"
+    "lodash": "^3.10.1",
+    "request": "^2.67.0",
+    "underscore": "^1.8.3",
+    "uuid": "^2.0.1"
   }
 }

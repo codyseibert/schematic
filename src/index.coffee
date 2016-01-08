@@ -1,4 +1,4 @@
-app = require "./#{process.argv[2]}/nodes.json"
+app = require "./#{process.argv[2]}/nodes"
 emitter = require './emitter'
 filewalker = require 'filewalker'
 path = require 'path'
