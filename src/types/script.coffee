@@ -1,3 +1,3 @@
 
 module.exports = (chain, config, logger, input) ->
-  config
+  config.fn chain, config, logger, input
