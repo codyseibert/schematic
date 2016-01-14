@@ -1,3 +1,5 @@
+moment = require 'moment'
+
 module.exports =
   nodes:
     'generator':
@@ -29,9 +31,17 @@ module.exports =
               obj[key] = entry[i]
             obj
 
-    'writer':
-      type: 'writer'
+    'sort':
+      type: 'script'
       on: 'converter'
       config:
+        fn: (chain, config, logger, input) ->
+          input.sort (a, b) ->
+            moment(a.Date).valueOf() - moment(b.Date).valueOf()
+
+    'writer':
+      type: 'writer'
+      on: 'sort'
+      config:
         folder: (chain) -> "/Users/cseibert/workspace/schematic/dist/apps/stocks"
-        file: (chain) -> "#{chain[3].output.ticker}.csv"
+        file: (chain) -> "#{chain[4].output.ticker}.csv"
