@@ -1,11 +1,8 @@
-emitter = require '../emitter'
+fs = require 'fs'
+Promise = require 'bluebird'
 
-module.exports = (id, constants) ->
-  run: (input) ->
-    fs = require 'fs'
-    folder = if typeof constants.folder is 'function' then constants.folder(input) else constants.folder
-    file = if typeof constants.file is 'function' then constants.file(input) else constants.file
-    file = if folder? then "#{folder}/#{file}" else file
-    input.response = JSON.stringify input.response, null, 2 if !!constants.json
-    fs.writeFile file, input.response, (err) ->
-      emitter.emit id, err
+module.exports = (chain, config, logger, input) ->
+  folder = config.folder? chain
+  file = config.file? chain
+  path = if folder? then "#{folder}/#{file}" else file
+  fs.writeFileSync path, JSON.stringify input, null, 2

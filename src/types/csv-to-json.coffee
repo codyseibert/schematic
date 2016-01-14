@@ -1,8 +1,8 @@
-request = require 'request'
+parse = require 'csv-parse'
 _ = require 'underscore'
 Promise = require 'bluebird'
 
 module.exports = (chain, config, logger, input) ->
   new Promise (resolve, reject) ->
-    request config.url(chain), (err, http, response) ->
-      resolve response
+    parse input, (err, json) ->
+      resolve json

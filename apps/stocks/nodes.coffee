@@ -6,39 +6,32 @@ module.exports =
       config:
         ticker: 'GOOG'
 
-    'print':
-      type: 'script'
+    'requester':
+      type: 'requester'
       on: 'generator'
       config:
-        fn: (chain, config, logger, input) ->
-          logger.trace 'print'
-          logger.trace "chain:  #{JSON.stringify chain, null, 2}"
+        url: (chain) -> "http://ichart.finance.yahoo.com/table.csv?s=#{chain[0].output.ticker}"
 
-    'end':
+    'csv-to-json':
+      type: 'csv-to-json'
+      on: 'requester'
+
+    'converter':
       type: 'script'
-      on: 'print'
+      on: 'csv-to-json'
       config:
         fn: (chain, config, logger, input) ->
-          logger.trace 'end'
-          logger.trace "chain:  #{JSON.stringify chain, null, 2}"
+          headers = input.shift()
+          ret = []
+          input.map (entry) ->
+            obj = {}
+            for key, i in headers
+              obj[key] = entry[i]
+            obj
 
-    # 'requester':
-    #   type: 'requester'
-    #   on: 'generator'
-    #   config:
-    #     keepInput: true
-    #     url: (input) -> "http://ichart.finance.yahoo.com/table.csv?s=#{input.ticker}"
-    #
-    # 'parser':
-    #   type: 'parser'
-    #   on: 'requester'
-    #   config:
-    #     keepInput: true
-    #     url: (input) -> "http://ichart.finance.yahoo.com/table.csv?s=#{input.ticker}"
-    #
-    # 'writer':
-    #   type: 'writer'
-    #   on: 'requester'
-    #   config:
-    #     folder: "/Users/cseibert/workspace/schematic/dist/apps/stocks"
-    #     file: (input) -> "#{input.ticker}.csv"
+    'writer':
+      type: 'writer'
+      on: 'converter'
+      config:
+        folder: (chain) -> "/Users/cseibert/workspace/schematic/dist/apps/stocks"
+        file: (chain) -> "#{chain[3].output.ticker}.csv"
