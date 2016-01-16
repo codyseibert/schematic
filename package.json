@@ -25,11 +25,15 @@
   "dependencies": {
     "bluebird": "^3.1.1",
     "cheerio": "^0.19.0",
+    "coffee-script": "^1.10.0",
     "csv-parse": "^1.0.1",
+    "express": "^4.13.3",
     "filewalker": "^0.1.2",
     "lodash": "^3.10.1",
     "log4js": "^0.6.29",
     "moment": "^2.11.1",
+    "morgan": "^1.6.1",
+    "multer": "^1.1.0",
     "request": "^2.67.0",
     "underscore": "^1.8.3",
     "uuid": "^2.0.1"

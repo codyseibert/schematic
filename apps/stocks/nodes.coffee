@@ -39,9 +39,18 @@ module.exports =
           input.sort (a, b) ->
             moment(a.Date).valueOf() - moment(b.Date).valueOf()
 
-    'writer':
-      type: 'writer'
+    'derivative':
+      type: 'script'
       on: 'sort'
       config:
-        folder: (chain) -> "/Users/cseibert/workspace/schematic/dist/apps/stocks"
-        file: (chain) -> "#{chain[4].output.ticker}.csv"
+        fn: (chain, config, logger, input) ->
+          input[0].Derivative = 0
+          for i in [1...input.length]
+            input[i].Derivative = input[i].Close+0 - input[i-1].Close+0
+          input
+
+    'writer':
+      type: 'writer'
+      on: 'derivative'
+      config:
+        file: (chain) -> "#{chain[5].output.ticker}.csv"
